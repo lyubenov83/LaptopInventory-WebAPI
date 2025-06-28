@@ -1,9 +1,12 @@
-name: Deploy to Azure Web App
+name: Deploy to Azure Web App via Service Principal
 
 on:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
 
 jobs:
   build-and-deploy:
@@ -18,13 +21,16 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Publish .NET app
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Publish project
         run: dotnet publish -c Release -o release
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: LaptopInventoryAPI      # ← Replace this if needed
-          slot-name: production
-          publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+          app-name: LaptopInventoryAPI   # ← Make sure this matches your Azure app name exactly
           package: release
