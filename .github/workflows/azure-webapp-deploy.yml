@@ -32,5 +32,5 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: LaptopInventoryAPI   # ← Make sure this matches your Azure app name exactly
+          app-name: laptopinventory-api   # ✅ Fixed to match your actual Azure Web App name
           package: release
