@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
   build-and-deploy:
     runs-on: windows-latest
@@ -16,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up .NET
+      - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -26,11 +23,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Publish project
+      - name: Publish the app
         run: dotnet publish -c Release -o release
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: laptopinventory-api   # ✅ Fixed to match your actual Azure Web App name
+          app-name: laptopinventory-api
           package: release
