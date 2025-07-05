@@ -1,3 +1,5 @@
+
+
 name: Deploy to Azure Web App via Service Principal
 
 on:
@@ -31,3 +33,7 @@ jobs:
         with:
           app-name: laptopinventory-api
           package: release
+
+
+
+# Trigger rebuild
