@@ -24,7 +24,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Publish the app
-        run: dotnet publish -c Release -o release
+        run: dotnet publish LaptopInventoryAPI.csproj -c Release -o release
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
